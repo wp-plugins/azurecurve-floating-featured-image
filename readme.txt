@@ -1,4 +1,4 @@
-=== azurecurve Series Index ===
+=== azurecurve Floating Featured Image ===
 Contributors: azurecurve
 Donate link: http://wordpress.azurecurve.co.uk/support-development/
 Author URI: http://wordpress.azurecurve.co.uk/
