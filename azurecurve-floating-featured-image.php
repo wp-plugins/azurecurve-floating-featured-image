@@ -3,7 +3,7 @@
 Plugin Name: azurecurve Floating Featured Image
 Plugin URI: http://wordpress.azurecurve.co.uk/plugins/floating-featured-image/
 Description: Shortcode allowing a floating featured image to be placed at the top of a post
-Version: 1.0.1
+Version: 1.0.2
 Author: azurecurve
 Author URI: http://wordpress.azurecurve.co.uk/
 
@@ -20,7 +20,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-
 
 The full copy of the GNU General Public License is available here: http://www.gnu.org/licenses/gpl.txt
  */
@@ -162,7 +161,7 @@ function azc_ffi_config_page() {
 				<input name="page_options" type="hidden" value="default_path, default_image, default_title default_alt, default_taxonomy_is_tag, default_taxonomy" />
 				
 				<!-- Adding security through hidden referrer field -->
-				<?php wp_nonce_field( 'azc_ffi' ); ?>
+				<?php wp_nonce_field( 'azc_ffi_nonce', 'azc_ffi_nonce' ); ?>
 				<table class="form-table">
 				<tr><td colspan=2>
 					<p>Set the default path for where you will be storing the images; default is to the plugin/images folder.</p>
@@ -214,55 +213,52 @@ function azc_ffi_admin_init() {
 }
 
 function process_azc_ffi_options() {
-	/*	// Check that user has proper security level
-	if ( !current_user_can( 'manage_options' ) ){
-		wp_die( 'Not allowed' );
+	// Check that user has proper security level
+	if ( !current_user_can( 'manage_options' ) ){ wp_die( 'Not allowed' ); }
+
+	if ( ! empty( $_POST ) && check_admin_referer( 'azc_ffi_nonce', 'azc_ffi_nonce' ) ) {	
+		// Retrieve original plugin options array
+		$options = get_option( 'azc_ffi_options' );
+		
+		$option_name = 'default_path';
+		if ( isset( $_POST[$option_name] ) ) {
+			$options[$option_name] = ($_POST[$option_name]);
+		}
+		
+		$option_name = 'default_image';
+		if ( isset( $_POST[$option_name] ) ) {
+			$options[$option_name] = ($_POST[$option_name]);
+		}
+		
+		$option_name = 'default_title';
+		if ( isset( $_POST[$option_name] ) ) {
+			$options[$option_name] = ($_POST[$option_name]);
+		}
+		
+		$option_name = 'default_alt';
+		if ( isset( $_POST[$option_name] ) ) {
+			$options[$option_name] = ($_POST[$option_name]);
+		}
+		
+		$option_name = 'default_taxonomy_is_set';
+		if ( isset( $_POST[$option_name] ) ) {
+			$options[$option_name] = 1;
+		}else{
+			$options[$option_name] = 0;
+		}
+		
+		$option_name = 'default_taxonomy';
+		if ( isset( $_POST[$option_name] ) ) {
+			$options[$option_name] = ($_POST[$option_name]);
+		}
+		
+		// Store updated options array to database
+		update_option( 'azc_ffi_options', $options );
+		
+		// Redirect the page to the configuration form that was processed
+		wp_redirect( add_query_arg( 'page', 'azurecurve-floating-featured-image', admin_url( 'options-general.php' ) ) );
+		exit;
 	}
-	// Check that nonce field created in configuration form is present
-	check_admin_referer( 'azc_ffi' );*/
-	settings_fields('azc_ffi');
-	
-	// Retrieve original plugin options array
-	$options = get_option( 'azc_ffi_options' );
-	
-	$option_name = 'default_path';
-	if ( isset( $_POST[$option_name] ) ) {
-		$options[$option_name] = ($_POST[$option_name]);
-	}
-	
-	$option_name = 'default_image';
-	if ( isset( $_POST[$option_name] ) ) {
-		$options[$option_name] = ($_POST[$option_name]);
-	}
-	
-	$option_name = 'default_title';
-	if ( isset( $_POST[$option_name] ) ) {
-		$options[$option_name] = ($_POST[$option_name]);
-	}
-	
-	$option_name = 'default_alt';
-	if ( isset( $_POST[$option_name] ) ) {
-		$options[$option_name] = ($_POST[$option_name]);
-	}
-	
-	$option_name = 'default_taxonomy_is_set';
-	if ( isset( $_POST[$option_name] ) ) {
-		$options[$option_name] = 1;
-	}else{
-		$options[$option_name] = 0;
-	}
-	
-	$option_name = 'default_taxonomy';
-	if ( isset( $_POST[$option_name] ) ) {
-		$options[$option_name] = ($_POST[$option_name]);
-	}
-	
-	// Store updated options array to database
-	update_option( 'azc_ffi_options', $options );
-	
-	// Redirect the page to the configuration form that was processed
-	wp_redirect( add_query_arg( 'page', 'azurecurve-floating-featured-image', admin_url( 'options-general.php' ) ) );
-	exit;
 }
 
 ?>
