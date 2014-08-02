@@ -27,7 +27,7 @@ The full copy of the GNU General Public License is available here: http://www.gn
 
 register_activation_hook( __FILE__, 'azc_ffi_set_default_options' );
 
-function azc_ffi_set_default_options() {
+function azc_ffi_set_default_options($networkwide) {
 	
 	$new_options = array(
 				'default_path' => plugin_dir_url(__FILE__).'images/',
@@ -38,31 +38,35 @@ function azc_ffi_set_default_options() {
 				'default_taxonomy_is_tag' => 0
 			);
 	
-	// set defaults for single site
-	if ( ! is_multisite() ) {
+	// set defaults for multi-site
+	if (function_exists('is_multisite') && is_multisite()) {
+		// check if it is a network activation - if so, run the activation function for each blog id
+		if ($networkwide) {
+			global $wpdb;
 
-		if ( get_option( 'azc_ffi_options' ) === false ) {
-			add_option( 'azc_ffi_options', $new_options );
-		}
-	}
-	//set defaults for multi-site
-	else{
-		global $wpdb;
+			$blog_ids = $wpdb->get_col( "SELECT blog_id FROM $wpdb->blogs" );
+			$original_blog_id = get_current_blog_id();
 
-		$blog_ids = $wpdb->get_col( "SELECT blog_id FROM $wpdb->blogs" );
-		$original_blog_id = get_current_blog_id();
+			foreach ( $blog_ids as $blog_id ) {
+				switch_to_blog( $blog_id );
 
-		foreach ( $blog_ids as $blog_id ) {
-			switch_to_blog( $blog_id );
-
-			foreach ( $options as $option ) {
 				if ( get_option( 'azc_ffi_options' ) === false ) {
 					add_option( 'azc_ffi_options', $new_options );
 				}
 			}
-		}
 
-		switch_to_blog( $original_blog_id );
+			switch_to_blog( $original_blog_id );
+		}else{
+			if ( get_option( 'azc_ffi_options' ) === false ) {
+				add_option( 'azc_ffi_options', $new_options );
+			}
+		}
+	}
+	//set defaults for single site
+	else{
+		if ( get_option( 'azc_ffi_options' ) === false ) {
+			add_option( 'azc_ffi_options', $new_options );
+		}
 	}
 }
 
