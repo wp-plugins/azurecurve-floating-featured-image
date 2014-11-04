@@ -3,7 +3,7 @@
 Plugin Name: azurecurve Floating Featured Image
 Plugin URI: http://wordpress.azurecurve.co.uk/plugins/floating-featured-image/
 Description: Shortcode allowing a floating featured image to be placed at the top of a post
-Version: 1.0.2
+Version: 1.0.3
 Author: azurecurve
 Author URI: http://wordpress.azurecurve.co.uk/
 
