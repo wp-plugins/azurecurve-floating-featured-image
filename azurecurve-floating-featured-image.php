@@ -2,10 +2,15 @@
 /*
 Plugin Name: azurecurve Floating Featured Image
 Plugin URI: http://wordpress.azurecurve.co.uk/plugins/floating-featured-image/
+
 Description: Shortcode allowing a floating featured image to be placed at the top of a post
-Version: 1.0.3
+Version: 1.0.4
+
 Author: azurecurve
 Author URI: http://wordpress.azurecurve.co.uk/
+
+Text Domain: azurecurve-floating-featured-image
+Domain Path: /languages
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -23,6 +28,14 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 The full copy of the GNU General Public License is available here: http://www.gnu.org/licenses/gpl.txt
  */
+
+add_action('plugins_loaded', 'azc_ffi_load_plugin_textdomain');
+
+function azc_ffi_load_plugin_textdomain(){
+	
+	$loaded = load_plugin_textdomain( 'azurecurve-floating-featured-image', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+	//if ($loaded){ echo 'true'; }else{ echo 'false'; }
+}
 
 register_activation_hook( __FILE__, 'azc_ffi_set_default_options' );
 
@@ -129,7 +142,7 @@ function azc_ffi_plugin_action_links($links, $file) {
     }
 
     if ($file == $this_plugin) {
-        $settings_link = '<a href="' . get_bloginfo('wpurl') . '/wp-admin/admin.php?page=azurecurve-featured-floating-image">Settings</a>';
+        $settings_link = '<a href="' . get_bloginfo('wpurl') . '/wp-admin/admin.php?page=azurecurve-featured-floating-image">'. __('Settings', 'azurecurve-floating-featured-image').'</a>';
         array_unshift($links, $settings_link);
     }
 
@@ -147,7 +160,7 @@ function azc_ffi_settings_menu() {
 
 function azc_ffi_config_page() {
 	if (!current_user_can('manage_options')) {
-        wp_die('You do not have sufficient permissions to access this page.');
+        wp_die(__('You do not have sufficient permissions to access this page.', 'azurecurve-floating-featured-image'));
     }
 	
 	// Retrieve plugin configuration options from database
@@ -155,7 +168,7 @@ function azc_ffi_config_page() {
 	?>
 	<div id="azc-ffi-general" class="wrap">
 		<fieldset>
-			<h2>azurecurve Floating Featured Image Configuration</h2>
+			<h2><?php _e('azurecurve Floating Featured Image Configuration', 'azurecurve-floating-featured-image'); ?></h2>
 			<form method="post" action="admin-post.php">
 				<input type="hidden" name="action" value="save_azc_ffi_options" />
 				<input name="page_options" type="hidden" value="default_path, default_image, default_title default_alt, default_taxonomy_is_tag, default_taxonomy" />
@@ -164,40 +177,40 @@ function azc_ffi_config_page() {
 				<?php wp_nonce_field( 'azc_ffi_nonce', 'azc_ffi_nonce' ); ?>
 				<table class="form-table">
 				<tr><td colspan=2>
-					<p>Set the default path for where you will be storing the images; default is to the plugin/images folder.</p>
+					<p><?php _e('Set the default path for where you will be storing the images; default is to the plugin/images folder.', 'azurecurve-floating-featured-image'); ?></p>
 					
-					<p>Use the &#91;featured-image&#93; shortcode to place the image in a post or on a page. With the default stylesheet it will float to the right.</p>
+					<p><?php _e(sprintf('Use the %s shortcode to place the image in a post or on a page. With the default stylesheet it will float to the right.', 'featured-image'), 'azurecurve-floating-featured-image'); ?></p>
 					
-					<p>Add image attribute to use an image other than the default; title and alt attributes can also be set to override the defaults.</p>
+					<p><?php _e(sprintf('Add image attribute to use an image other than the default; %1$s and %2$s attributes can also be set to override the defaults.', 'title', 'alt'), 'azurecurve-floating-featured-image'); ?></p>
 					
-					<p>Add is_tag=1 attribute to use the tag instead of the category taxonomy.</p>
+					<p><?php _e(sprintf('Add %s attribute to use the tag instead of the category taxonomy.', 'is_tag=1'), 'azurecurve-floating-featured-image'); ?></p>
 					
-					<p>Add taxonomy attribute to have the image hyperlinked (category will be used if both are supplied).</p>
+					<p><?php _e(sprintf('Add %s attribute to have the image hyperlinked (category will be used if both are supplied).', 'taxonomy'), 'azurecurve-floating-featured-image'); ?> </p>
 				</td></tr>
-				<tr><th scope="row"><label for="width">Default Path</label></th><td>
+				<tr><th scope="row"><label for="width"><?php _e('Default Path', 'azurecurve-floating-featured-image'); ?>); ?></label></th><td>
 					<input type="text" name="default_path" value="<?php echo esc_html( stripslashes($options['default_path']) ); ?>" class="regular-text" />
-					<p class="description">Set default folder for images</p>
+					<p class="description"><?php _e('Set default folder for images'); ?></p>
 				</td></tr>
-				<tr><th scope="row"><label for="width">Default Image</label></th><td>
+				<tr><th scope="row"><label for="width"><?php _e('Default Image', 'azurecurve-floating-featured-image'); ?>); ?></label></th><td>
 					<input type="text" name="default_image" value="<?php echo esc_html( stripslashes($options['default_image']) ); ?>" class="regular-text" />
-					<p class="description">Set default image used when no img attribute set</p>
+					<p class="description"><?php _e(sprintf('Set default image used when no %s attribute set', 'img'), 'azurecurve-floating-featured-image'); ?> </p>
 				</td></tr>
-				<tr><th scope="row"><label for="width">Default Title</label></th><td>
+				<tr><th scope="row"><label for="width"><?php _e('Default Title', 'azurecurve-floating-featured-image'); ?>); ?></label></th><td>
 					<input type="text" name="default_title" value="<?php echo esc_html( stripslashes($options['default_title']) ); ?>" class="regular-text" />
-					<p class="description">Set default title for image</p>
+					<p class="description"><?php _e('Set default title for image', 'azurecurve-floating-featured-image'); ?></p>
 				</td></tr>
-				<tr><th scope="row"><label for="width">Default Alt</label></th><td>
+				<tr><th scope="row"><label for="width"><?php _e('Default Alt', 'azurecurve-floating-featured-image'); ?></label></th><td>
 					<input type="text" name="default_alt" value="<?php echo esc_html( stripslashes($options['default_alt']) ); ?>" class="regular-text" />
-					<p class="description">Set default alt text for image</p>
+					<p class="description"><?php _e(sprintf('Set default %s text for image', 'alt'), 'azurecurve-floating-featured-image'); ?></p>
 				</td></tr>
-				<tr><th scope="row">Default Taxonomy Is Tag</th><td>
+				<tr><th scope="row"><?php _e('Default Taxonomy Is Tag', 'azurecurve-floating-featured-image'); ?></th><td>
 					<fieldset><legend class="screen-reader-text"><span>Default Taxonomy Is Tag</span></legend>
-					<label for="enable_header"><input name="enable_header" type="checkbox" id="enable_header" value="1" <?php checked( '1', $options['default_taxonomy_is_tag'] ); ?> />Default Taxonomy Is Tag?</label>
+					<label for="enable_header"><input name="enable_header" type="checkbox" id="enable_header" value="1" <?php checked( '1', $options['default_taxonomy_is_tag'] ); ?> /><?php _e('Default Taxonomy Is Tag?', 'azurecurve-floating-featured-image'); ?></label>
 					</fieldset>
 				</td></tr>
-				<tr><th scope="row"><label for="width">Default Taxonomy</label></th><td>
+				<tr><th scope="row"><label for="width"><?php _e('Default Taxonomy', 'azurecurve-floating-featured-image'); ?></label></th><td>
 					<input type="text" name="default_taxonomy" value="<?php echo esc_html( stripslashes($options['default_taxonomy']) ); ?>" class="regular-text" />
-					<p class="description">Set default taxonomy to hyperlink image (default is to use category unless Is Tag is marked)</p>
+					<p class="description"><?php _e('Set default taxonomy to hyperlink image (default is to use category unless Is Tag is marked)', 'azurecurve-floating-featured-image'); ?></p>
 				</td></tr>
 				</table>
 				<input type="submit" value="Submit" class="button-primary"/>
@@ -214,7 +227,7 @@ function azc_ffi_admin_init() {
 
 function process_azc_ffi_options() {
 	// Check that user has proper security level
-	if ( !current_user_can( 'manage_options' ) ){ wp_die( 'Not allowed' ); }
+	if ( !current_user_can( 'manage_options' ) ){ wp_die( __('You do not have permissions to perform this action.') ); }
 
 	if ( ! empty( $_POST ) && check_admin_referer( 'azc_ffi_nonce', 'azc_ffi_nonce' ) ) {	
 		// Retrieve original plugin options array
