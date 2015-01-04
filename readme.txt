@@ -5,7 +5,7 @@ Author URI: http://wordpress.azurecurve.co.uk/
 Plugin URI: http://wordpress.azurecurve.co.uk/plugins/floating-featured-image/
 Tags: posts, post, featured image
 Requires at least: 3.3
-Tested up to: 4.0.1
+Tested up to: 4.1.0
 Stable tag: 1.0.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -25,6 +25,9 @@ When used several parameters are available for use:
 This plugin is multi-site compatible.
 
 This plugin supports language translations. If you want to translate this plugin please sent the .po and .mo files to wordpress.translations@azurecurve.co.uk for inclusion in the next version (full credit will be given). The .pot fie is in the languages folder of the plugin and can also be downloaded from the plugin page on http://wordpress.azurecurve.co.uk.
+
+Current translations:
+Serbian (sr_RS) translation by Borisa Djuraskovic of [Web Hosting Hub](http://www.webhostinghub.com/)
 
 == Installation ==
 To install the plugin copy the <em>azurcurve-floating-featured-image</em> folder into your plug-in directory and activate it.
