@@ -5,8 +5,8 @@ Author URI: http://wordpress.azurecurve.co.uk/
 Plugin URI: http://wordpress.azurecurve.co.uk/plugins/floating-featured-image/
 Tags: posts, post, featured image
 Requires at least: 3.3
-Tested up to: 4.1.0
-Stable tag: 1.0.4
+Tested up to: 4.2.0
+Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -34,6 +34,10 @@ To install the plugin copy the <em>azurcurve-floating-featured-image</em> folder
 
 == Changelog ==
 Changes and feature additions for the Posts Archive plugin:
+= 1.1.0 =
+* Add better explanation of shoprtcode usage to Settings page
+* Fixed bug with Plugins page link to Settings page
+* Fixed settings page formatting issue
 = 1.0.4 =
 * Multilanguage support added
 = 1.0.3 =

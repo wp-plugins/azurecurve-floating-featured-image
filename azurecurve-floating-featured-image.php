@@ -4,7 +4,7 @@ Plugin Name: azurecurve Floating Featured Image
 Plugin URI: http://wordpress.azurecurve.co.uk/plugins/floating-featured-image/
 
 Description: Shortcode allowing a floating featured image to be placed at the top of a post
-Version: 1.0.4
+Version: 1.1.0
 
 Author: azurecurve
 Author URI: http://wordpress.azurecurve.co.uk/
@@ -179,23 +179,31 @@ function azc_ffi_config_page() {
 				<tr><td colspan=2>
 					<p><?php _e('Set the default path for where you will be storing the images; default is to the plugin/images folder.', 'azurecurve-floating-featured-image'); ?></p>
 					
-					<p><?php _e(sprintf('Use the %s shortcode to place the image in a post or on a page. With the default stylesheet it will float to the right.', 'featured-image'), 'azurecurve-floating-featured-image'); ?></p>
+					<p><?php _e('Set the default path for where you will be storing the images; default is to the plugin/images folder.', 'azurecurve-floating-featured-image'); ?></p>
+					
+					<p><?php _e(sprintf('Use the %s shortcode to place the image in a post or on a page. With the default stylesheet it will float to the right.', '[featured-image]'), 'azurecurve-floating-featured-image'); ?></p>
 					
 					<p><?php _e(sprintf('Add image attribute to use an image other than the default; %1$s and %2$s attributes can also be set to override the defaults.', 'title', 'alt'), 'azurecurve-floating-featured-image'); ?></p>
 					
 					<p><?php _e(sprintf('Add %s attribute to use the tag instead of the category taxonomy.', 'is_tag=1'), 'azurecurve-floating-featured-image'); ?></p>
 					
 					<p><?php _e(sprintf('Add %s attribute to have the image hyperlinked (category will be used if both are supplied).', 'taxonomy'), 'azurecurve-floating-featured-image'); ?> </p>
+					
+					<p><?php _e(sprintf('If the default featured image is to be displayed simply add the shortcode to a page or post.).', '[featured-image]'), 'azurecurve-floating-featured-image'); ?> </p>
+					
+					<p><?php _e(sprintf('When overriding the default add the parameters to the shortcode; e.g. %s', "[featured-image image='wordpress.png' title='WordPress' alt='WordPress' taxonomy='wordpress' is_tag=1]"), 'azurecurve-floating-featured-image'); ?> </p>
+					
+					
 				</td></tr>
-				<tr><th scope="row"><label for="width"><?php _e('Default Path', 'azurecurve-floating-featured-image'); ?>); ?></label></th><td>
+				<tr><th scope="row"><label for="width"><?php _e('Default Path', 'azurecurve-floating-featured-image'); ?>)</label></th><td>
 					<input type="text" name="default_path" value="<?php echo esc_html( stripslashes($options['default_path']) ); ?>" class="regular-text" />
 					<p class="description"><?php _e('Set default folder for images'); ?></p>
 				</td></tr>
-				<tr><th scope="row"><label for="width"><?php _e('Default Image', 'azurecurve-floating-featured-image'); ?>); ?></label></th><td>
+				<tr><th scope="row"><label for="width"><?php _e('Default Image', 'azurecurve-floating-featured-image'); ?>)</label></th><td>
 					<input type="text" name="default_image" value="<?php echo esc_html( stripslashes($options['default_image']) ); ?>" class="regular-text" />
 					<p class="description"><?php _e(sprintf('Set default image used when no %s attribute set', 'img'), 'azurecurve-floating-featured-image'); ?> </p>
 				</td></tr>
-				<tr><th scope="row"><label for="width"><?php _e('Default Title', 'azurecurve-floating-featured-image'); ?>); ?></label></th><td>
+				<tr><th scope="row"><label for="width"><?php _e('Default Title', 'azurecurve-floating-featured-image'); ?>)</label></th><td>
 					<input type="text" name="default_title" value="<?php echo esc_html( stripslashes($options['default_title']) ); ?>" class="regular-text" />
 					<p class="description"><?php _e('Set default title for image', 'azurecurve-floating-featured-image'); ?></p>
 				</td></tr>
